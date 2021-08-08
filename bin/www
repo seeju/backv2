@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('backv2:server');
 var http = require('http');
+const { openConnection } = require('../config/Connection');
 
 /**
  * Get port from environment and store in Express.
