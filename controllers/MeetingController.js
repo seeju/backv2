@@ -31,8 +31,8 @@ module.exports = {
             })
         }*/
 
-        const CheckLider = await User.findById(lider);
-        const CheckLiderado = await User.findById(liderado);
+        const CheckLider = await User.findOne({username: lider}).lean();
+        const CheckLiderado = await User.findOne({username: liderado}).lean();
 
         if (!CheckLider || !CheckLiderado) {
             return res.status(401).json({error: "Líder ou liderado não encontrado"})
@@ -40,14 +40,12 @@ module.exports = {
 
         try {
             const meeting = await Meeting.create({
-                lider,
-                liderado,
+                lider: CheckLider._id,
+                liderado: CheckLiderado._id,
                 data,
                 realizado
             })
-            meeting.lider = CheckLider;
-            meeting.liderado = CheckLiderado;
-            console.log('Reunião criada com sucesso! ', response)
+            console.log('Reunião criada com sucesso! ', meeting)
         } catch (error) {
             if (error.code === 11000) {
                 // duplicate key
