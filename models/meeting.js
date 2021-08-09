@@ -7,6 +7,7 @@ const MeetingSchema = new mongoose.Schema(
 		lider: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 		liderado: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 		data: { type: Date, required: true},
+		frequencia: { type: Number, required: true},
 		realizado: { type: Boolean, default: false}
 	},
 	{ collection: 'meetings' }

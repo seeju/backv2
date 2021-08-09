@@ -7,6 +7,7 @@ module.exports = {
             lider,
             liderado,
             data,
+            frequencia,
             realizado,
         } = req.body
 
@@ -24,13 +25,6 @@ module.exports = {
             })
         }
 
-       /* if (!data || typeof data !== 'date') {
-            return res.json({
-                status: 'error',
-                error: 'Data inválida'
-            })
-        }*/
-
         const CheckLider = await User.findOne({username: lider}).lean();
         const CheckLiderado = await User.findOne({username: liderado}).lean();
 
@@ -43,9 +37,9 @@ module.exports = {
                 lider: CheckLider._id,
                 liderado: CheckLiderado._id,
                 data,
+                frequencia,
                 realizado
             })
-            console.log('Reunião criada com sucesso! ', meeting)
         } catch (error) {
             if (error.code === 11000) {
                 // duplicate key
@@ -58,8 +52,28 @@ module.exports = {
         }
 
         res.json({
-            status: 'ok'
+            status: 'Reunião criada com sucesso!'
+        })
+
+    },
+
+    async apagar (req,res) {
+        const CheckMeeting = await Meeting.findOne({_id: req.params.id}).lean();
+
+        console.log(CheckMeeting)
+
+        if (!CheckMeeting) {
+            return res.status(401).json({error: "Reunião não encontrada"})
+        }
+
+        var meeting = await Meeting.findByIdAndDelete(
+            req.params.id,
+        )
+
+        res.json({
+            status: 'Reunião apagada!'
         })
 
     }
+
 }
