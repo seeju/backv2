@@ -39,7 +39,7 @@ module.exports = {
                 username,
                 password
             })
-            console.log('Usuário criado com sucesso: ', response)
+            console.log('Usuário criado com sucesso!', response)
         } catch (error) {
             if (error.code === 11000) {
                 // duplicate key

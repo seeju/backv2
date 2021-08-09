@@ -1,20 +1,18 @@
 const mongoose = require('mongoose');
+const User = require('../models/user');
+
 
 const MeetingSchema = new mongoose.Schema(
 	{
-	  date: {
-		type: Date,
-		required: true,
-	  },
-	  canceled_at: {
-		type: Date,
-	  },
-	  lider: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-	  liderado:{type:mongoose.Schema.Types.ObjectId, ref: 'User'},
+		lider: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+		liderado: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+		data: { type: Date, required: true},
+		realizado: { type: Boolean, default: false}
 	},
-	{
-	  timestamps: true,
-	},
-  );
+	{ collection: 'meetings' }
+);
+
   
-  export default mongoose.model('Meeting', MeetingSchema);
+const Meeting = mongoose.model('Meeting', MeetingSchema);
+
+module.exports = Meeting;
