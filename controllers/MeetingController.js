@@ -1,3 +1,4 @@
+const { endOfDecadeWithOptions } = require('date-fns/fp');
 const Meeting = require('../models/meeting');
 const User = require('../models/user')
 
@@ -60,8 +61,6 @@ module.exports = {
     async apagar (req,res) {
         const CheckMeeting = await Meeting.findOne({_id: req.params.id}).lean();
 
-        console.log(CheckMeeting)
-
         if (!CheckMeeting) {
             return res.status(401).json({error: "Reunião não encontrada"})
         }
@@ -74,6 +73,30 @@ module.exports = {
             status: 'Reunião apagada!'
         })
 
-    }
+    },
+
+
+    async editar (req,res) {
+        const CheckMeeting = await Meeting.findOne({_id: req.params.id}).lean();
+        const dados = req.body
+
+
+        if (!CheckMeeting) {
+            return res.status(401).json({error: "Reunião não encontrada"})
+        }
+
+        
+            await Meeting.updateMany ({ "id": CheckMeeting.id }, {"$set":{
+                "data": dados.data, 
+                "frequencia": dados.frequencia, 
+                "realizado": dados.realizado, 
+            }})
+            
+
+        res.json({
+            status: 'Reunião atualizada com sucesso!'
+        })
+
+    },
 
 }
