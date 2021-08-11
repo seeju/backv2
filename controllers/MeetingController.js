@@ -1,4 +1,3 @@
-const { endOfDecadeWithOptions } = require('date-fns/fp');
 const Meeting = require('../models/meeting');
 const User = require('../models/user')
 
@@ -11,6 +10,7 @@ module.exports = {
             frequencia,
             realizado,
         } = req.body
+
         atrasado = false
 
         dataAtual = Date.parse(new Date()) //converte a data atual em formato comparável
@@ -112,9 +112,14 @@ module.exports = {
         const meetings = await Meeting.find();
         res.json(meetings)
 
+    },
+
+    async listaruser(req,res) {
+        var meetinglider = await Meeting.find({lider: req.params.id}).lean()
+        var meetingliderado = await Meeting.find({liderado: req.params.id}).lean()
+        return res.json({meetinglider, meetingliderado})
+ 
     }
-
-
 
 
 }
