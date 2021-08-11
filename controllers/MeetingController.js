@@ -108,6 +108,13 @@ module.exports = {
 
     },
 
-    
+    async listar (req,res) {
+        const meetings = await Meeting.find();
+        res.json(meetings)
+
+    }
+
+
+
 
 }
