@@ -11,6 +11,15 @@ module.exports = {
             frequencia,
             realizado,
         } = req.body
+        atrasado = false
+
+        dataAtual = Date.parse(new Date()) //converte a data atual em formato comparável
+        dataReuniao = Date.parse(data) //converte a data da reunião em formato comparável
+
+        if(dataReuniao < dataAtual == true){ //verifica se a reunião está atrasada
+            atrasado = true 
+        }
+
 
         if (!lider || typeof lider !== 'string') {
             return res.json({
@@ -98,5 +107,7 @@ module.exports = {
         })
 
     },
+
+    
 
 }
