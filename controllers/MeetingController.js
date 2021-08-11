@@ -87,18 +87,17 @@ module.exports = {
 
     async editar (req,res) {
         const CheckMeeting = await Meeting.findOne({_id: req.params.id}).lean();
-        const dados = req.body
+        const dadosmeeting = req.body
 
 
         if (!CheckMeeting) {
             return res.status(401).json({error: "Reunião não encontrada"})
         }
 
-        
-            await Meeting.updateMany ({ "id": CheckMeeting.id }, {"$set":{
-                "data": dados.data, 
-                "frequencia": dados.frequencia, 
-                "realizado": dados.realizado, 
+            await Meeting.updateMany ({ "_id": CheckMeeting._id }, {"$set":{
+                "data": dadosmeeting.data, 
+                "frequencia": dadosmeeting.frequencia, 
+                "realizado": dadosmeeting.realizado, 
             }})
             
 

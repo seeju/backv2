@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'sdjkfh8923yhjdksbfma@#*(&@*!^#&@bhjb2qiuhesdbhjdsfg839ujkdhfjk';    
 
 module.exports = {
+
     async add(req, res) {
         const {
             username,
@@ -27,7 +28,7 @@ module.exports = {
             })
         }
 
-        if (plainTextPassword.length < 5) {
+        if (plainTextPassword.length < 6) {
             return res.json({
                 status: 'error',
                 error: 'Sua senha precisa ter pelo menos 6 caracteres'
@@ -57,5 +58,49 @@ module.exports = {
         res.json({
             status: 'ok'
         })
+    },
+
+
+    async apagar (req,res) {
+        const CheckUser = await User.findOne({_id: req.params.id}).lean();
+
+        if (!CheckUser) {
+            return res.status(401).json({error: "Usuário não encontrado"})
+        }
+    
+        var user = await User.findByIdAndDelete(
+            req.params.id
+        )
+
+        res.json({
+            status: 'Usuário removido!'
+        })
+
+    },
+
+    //utilizado para mudar um usuário normal para admin e vice versa
+    async editar (req,res) {
+        const CheckUser = await User.findOne({_id: req.params.id}).lean();
+        const dadosuser = req.body
+
+
+        if (!CheckUser) {
+            return res.status(401).json({error: "Usuário não encontrado"})
+        }
+
+            await User.updateOne ({ "_id": CheckUser._id }, {"$set":{
+                "admin": dadosuser.admin
+            }})
+            
+        res.json({
+            status: 'Usuário atualizado com sucesso!'
+        })
+
+    },
+
+    async listar (req,res) {
+        const users = await User.find();
+        res.json(users)
+
     }
 }
