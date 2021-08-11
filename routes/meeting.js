@@ -5,7 +5,7 @@ const controllers = require ('../controllers/MeetingController')
 router.post('/agendar', controllers.agendar);
 router.delete('/:id', controllers.apagar);
 router.put('/:id', controllers.editar);
-router.get('/listar', controllers.listar);
+router.get('/', controllers.listar);
 
 
 module.exports = router;
