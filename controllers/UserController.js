@@ -5,7 +5,7 @@ const JWT_SECRET = 'sdjkfh8923yhjdksbfma@#*(&@*!^#&@bhjb2qiuhesdbhjdsfg839ujkdhf
 
 
 module.exports = {
-    async login(req, res) {
+    async user(req, res) {
         const {
             username,
             password
@@ -15,7 +15,8 @@ module.exports = {
         }).lean()
 
         if (!user) {
-            return res.json({
+            
+            res.json({
                 status: 'error',
                 error: 'Usuário ou senha incorretos'
             })
@@ -31,10 +32,7 @@ module.exports = {
                 JWT_SECRET,
             )
 
-            return res.json({
-                status: 'ok',
-                data: token
-            })
+            return res.render('inicio')
         }
 
         res.json({

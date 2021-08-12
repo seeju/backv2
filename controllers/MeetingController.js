@@ -1,5 +1,6 @@
 const Meeting = require('../models/meeting');
 const User = require('../models/user')
+const router = require('../routes/meeting');
 
 module.exports = {
     async agendar(req,res) {
@@ -10,6 +11,8 @@ module.exports = {
             frequencia,
             realizado,
         } = req.body
+
+        res.render('agendar')
 
         atrasado = false
 
