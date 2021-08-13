@@ -12,8 +12,6 @@ module.exports = {
             realizado,
         } = req.body
 
-        res.render('agendar')
-
         atrasado = false
 
         dataAtual = Date.parse(new Date()) //converte a data atual em formato comparável

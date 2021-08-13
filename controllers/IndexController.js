@@ -31,8 +31,9 @@ module.exports = {
                 },
                 JWT_SECRET,
             )
-
+            console.log(token) //somente para testar e mostrar a alteração de senha no postman
             return res.render('inicio')
+
         }
 
         res.json({
